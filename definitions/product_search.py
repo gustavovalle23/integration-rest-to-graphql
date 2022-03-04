@@ -61,6 +61,12 @@ class Marca:
 
 @strawberry.type
 class Departamento(Enum):
+    """ O retorno do endpoint :
+    loja_id=2&q=cerv&page=1&menor_preco=1&maior_preco=10&ordem=baratos
+    retorna departamento 'cerveja' e 'cervejas'. Aparenta ser uma 
+    inconsistência de dados. O ideal é que seja um Enum ou uma união dessas 
+    categorias"""
+
     BEBIDAS = 'Bebidas'
     CERVEJA = 'Cerveja'
     CERVEJAS = 'Cervejas'
