@@ -1,33 +1,23 @@
-from typing import Optional
 import requests
 
-from definitions.product_search import (
+from definitions.product_department import (
     Infos, Marca, Modelo, OrdemDisponiveis, ProductSearch, Produto, Variacao
 )
 
 
-def _request(loja_id: int, q: str, page: int, menor_preco: float,
-             maior_preco: float, ordem: str) -> dict:
+def _request(loja_id: int, departamento_id: int) -> dict:
 
-    params = {
-        'loja_id': loja_id,
-        'q': q,
-        'page': page,
-        'menor_preco': menor_preco,
-        'maior_preco': maior_preco,
-        'ordem': ordem
-    }
-
+    params = {'departamento_id': departamento_id, 'loja_id': loja_id}
     return requests.get(
-        f'https://sandbox.carrinhocerto.com.br/api/busca/v2/', params=params
+        'https://sandbox.carrinhocerto.com.br/api/produtos-departamento/v2/',
+        params=params
     ).json()[0]
 
 
-def get_data_product_search_from_rest(loja_id: int, q: str, page: int,
-                                      menor_preco: float, maior_preco: float,
-                                      ordem: str) -> ProductSearch:
+def get_data_product_department_from_rest(loja_id: int,
+                                      departamento_id: int) -> ProductSearch:
 
-    data = _request(loja_id, q, page, menor_preco, maior_preco, ordem)
+    data = _request(loja_id, departamento_id)
 
     infos = data['infos']
     produtos = data['produtos']
@@ -36,6 +26,7 @@ def get_data_product_search_from_rest(loja_id: int, q: str, page: int,
     return ProductSearch(
         Infos(
             infos['total_registros'],
+            infos['departamento'],
             infos['ordem'],
             OrdemDisponiveis(
                 infos['ordem_disponiveis']['Relevância'],
