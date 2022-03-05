@@ -13,10 +13,7 @@ def _request(id: int) -> dict:
 
 
 def get_data_loja_from_rest(id) -> Store:
-    with open('store.json') as json_file:
-        data: dict = json.load(json_file)[0]
-
-    # data = _request(id)
+    data = _request(id)
 
     return Store(
         id=data['id'],

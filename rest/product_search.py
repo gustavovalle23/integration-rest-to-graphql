@@ -1,4 +1,4 @@
-import json
+from typing import Optional
 import requests
 
 from definitions.product_search import (
@@ -6,8 +6,9 @@ from definitions.product_search import (
 )
 
 
-def _request(loja_id: int, q: str, page: int,
-             menor_preco: float, maior_preco: float, ordem: str) -> dict:
+def _request(loja_id: int, q: str, page: int, menor_preco: float,
+             maior_preco: float, ordem: str, departamento_id: Optional[int]
+             ) -> dict:
 
     params = {
         'loja_id': loja_id,
@@ -17,6 +18,14 @@ def _request(loja_id: int, q: str, page: int,
         'maior_preco': maior_preco,
         'ordem': ordem
     }
+
+    if departamento_id:
+        params = {'departamento_id': departamento_id, 'loja_id': loja_id}
+        return requests.get(
+            'https://sandbox.carrinhocerto.com.br/api/produtos-departamento/v2/',
+            params=params
+        ).json()[0]
+
     return requests.get(
         f'https://sandbox.carrinhocerto.com.br/api/busca/v2/', params=params
     ).json()[0]
@@ -24,12 +33,11 @@ def _request(loja_id: int, q: str, page: int,
 
 def get_data_product_search_from_rest(loja_id: int, q: str, page: int,
                                       menor_preco: float, maior_preco: float,
-                                      ordem: str) -> ProductSearch:
+                                      ordem: str, departamento_id: Optional[int]) -> ProductSearch:
 
-    with open('productSearch.json') as json_file:
-        data: dict = json.load(json_file)[0]
+    data = _request(loja_id, q, page, menor_preco,
+                    maior_preco, ordem, departamento_id)
 
-    # data = _request(loja_id, q, page, menor_preco, maior_preco, ordem)
     infos = data['infos']
     produtos = data['produtos']
     marcas = data['marcas']

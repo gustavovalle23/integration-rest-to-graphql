@@ -9,9 +9,7 @@ def _request() -> dict:
 
 
 def get_data_company_from_rest():
-    with open('company.json') as json_file:
-        data: dict = json.load(json_file)
-    # data = _request()
+    data = _request()
 
     return Company(
         logo=data['logo'],

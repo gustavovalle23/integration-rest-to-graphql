@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 import strawberry
 
 from definitions.company import Company
@@ -23,6 +23,6 @@ class Query:
     @strawberry.field
     def listing_of_search(loja_id: int, q: str, page: int,
                           menor_preco: float, maior_preco: float,
-                          ordem: str) -> ProductSearch:
+                          ordem: str, departamento_id: Optional[int]) -> ProductSearch:
         return get_data_product_search_from_rest(loja_id, q, page, menor_preco,
-                                                 maior_preco, ordem)
+                                                 maior_preco, ordem, departamento_id)
