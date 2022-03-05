@@ -21,5 +21,8 @@ class Query:
         return get_data_loja_from_rest(id)
 
     @strawberry.field
-    def listing_of_search() -> ProductSearch:
-        return get_data_product_search_from_rest()
+    def listing_of_search(loja_id: int, q: str, page: int,
+                          menor_preco: float, maior_preco: float,
+                          ordem: str) -> ProductSearch:
+        return get_data_product_search_from_rest(loja_id, q, page, menor_preco,
+                                                 maior_preco, ordem)

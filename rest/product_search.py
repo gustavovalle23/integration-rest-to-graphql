@@ -1,13 +1,35 @@
 import json
 import requests
 
-from definitions.product_search import Infos, Marca, Modelo, OrdemDisponiveis, ProductSearch, Produto, Variacao
+from definitions.product_search import (
+    Infos, Marca, Modelo, OrdemDisponiveis, ProductSearch, Produto, Variacao
+)
 
 
-def get_data_product_search_from_rest() -> ProductSearch:
+def _request(loja_id: int, q: str, page: int,
+             menor_preco: float, maior_preco: float, ordem: str) -> dict:
+
+    params = {
+        'loja_id': loja_id,
+        'q': q,
+        'page': page,
+        'menor_preco': menor_preco,
+        'maior_preco': maior_preco,
+        'ordem': ordem
+    }
+    return requests.get(
+        f'https://sandbox.carrinhocerto.com.br/api/busca/v2/', params=params
+    ).json()[0]
+
+
+def get_data_product_search_from_rest(loja_id: int, q: str, page: int,
+                                      menor_preco: float, maior_preco: float,
+                                      ordem: str) -> ProductSearch:
+
     with open('productSearch.json') as json_file:
         data: dict = json.load(json_file)[0]
 
+    # data = _request(loja_id, q, page, menor_preco, maior_preco, ordem)
     infos = data['infos']
     produtos = data['produtos']
     marcas = data['marcas']

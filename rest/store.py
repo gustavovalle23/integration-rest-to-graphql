@@ -5,7 +5,11 @@ from definitions.store import Cidade, Estado, Store
 
 
 def _request(id: int) -> dict:
-    return requests.get(f'https://sandbox.carrinhocerto.com.br/api/dados-loja/v2/?loja_id={id}').json()[0]
+    params = {'loja_id': id}
+    return requests.get(
+        f'https://sandbox.carrinhocerto.com.br/api/dados-loja/v2/',
+        params=params
+    ).json()[0]
 
 
 def get_data_loja_from_rest(id) -> Store:
