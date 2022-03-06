@@ -1,4 +1,3 @@
-from typing import List, Optional
 import strawberry
 
 from definitions.company import Company

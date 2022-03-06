@@ -211,7 +211,7 @@ Example of query
 ```graphql
 query {
   listingDepartment(departamentoId: 21, lojaId: 2) {
-		infos {
+	infos {
       totalRegistros
       ordem
       precoMenor
