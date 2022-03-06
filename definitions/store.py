@@ -38,7 +38,7 @@ class Store:
     observacao_carrinho: str
     tags_observacao_produto: str
     exige_numero_valido_compra_online: bool
-    label_alternativa_resumo: str
+    label_alternativa_resumo: Optional[str]
     exibir_alternativa_resumo: bool
     latitude: str
     longitude: str
