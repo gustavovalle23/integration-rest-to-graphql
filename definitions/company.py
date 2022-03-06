@@ -1,16 +1,17 @@
+from typing import Optional
 import strawberry
 
 
 @strawberry.type
 class FacebookLogin:
-    client_id: str
-    secret: str
+    client_id: Optional[str]
+    secret: Optional[str]
 
 
 @strawberry.type
 class GoogleLogin:
-    client_id: str
-    secret: str
+    client_id: Optional[str]
+    secret: Optional[str]
 
 
 @strawberry.type
@@ -26,7 +27,7 @@ class Company:
     ramo: str
     possui_politica_privacidade: bool
     qtd_lojas_ativas: int
-    onesignal_app_id: str
+    onesignal_app_id: Optional[str]
     build_minimo_app: int
     key_api_google: str
     facebook_login: FacebookLogin
